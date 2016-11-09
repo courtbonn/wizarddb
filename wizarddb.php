@@ -10,8 +10,17 @@ if($mysqli->connect_errno){
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
+<head>
+	<style>
+	#left{
+		float:left;
+		width:50%;
+		overflow:hidden;
+	}
+	</style>
+</head>
 <body>
-<div>
+<div id="left">
 	<table>
 		<tr>
 			<td>Hogwarts People</td>
@@ -42,7 +51,40 @@ $stmt->close();
 	</table>
 </div>
 
-<div>
+<div id="left">
+	<table>
+		<tr>
+			<td>Hogwarts Students</td>
+		</tr>
+		<tr>
+			<td>First Name</td>
+			<td>Last Name</td>
+			<td>House</td>
+			<td>Blood Status</td>
+			<td>Year of Sorting</td>
+			<td>Wand</td>
+		</tr>
+		
+<?php
+if(!($stmt = $mysqli->prepare("SELECT p.fname, p.lname, h.hname, s.bloodStatus, s.yearOfSorting, p.wand FROM hw_students s INNER JOIN hw_people p ON p.id = s.id INNER JOIN hw_house h ON p.house = h.id"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($fname, $lname, $house, $bloodstatus, $yearofsorting, $wand)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+ echo "<tr>\n<td>\n" . $fname . "\n</td>\n<td>\n" . $lname . "\n</td>\n<td>\n" . $house . "\n</td>\n<td>\n" . $bloodstatus . "\n</td>\n<td>\n" . $yearofsorting . "\n</td>\n<td>\n" . $wand . "\n</td>\n</tr>";
+}
+$stmt->close();
+?>
+	</table>
+</div>
+
+<div id="left">
 	<table>
 		<tr>
 			<td>Wands</td>
@@ -144,10 +186,7 @@ $stmt->close();
 
 		<fieldset>
 			<legend>Delete a Wand</legend>
-			<p>Length: <input type="text" name="Length" /></p>
-			<p>Flexibility: <input type="text" name="Flexibility" /></p>
-			<p>Core Type: <input type="text" name="CoreType" /></p>
-			<p>Wand Wood: <input type="text" name="WandWood" /></p>
+			<p>Wand ID: <input type="text" name="WandID" /></p>
 		</fieldset>
 		<p><input type="submit" /></p>
 	</form>
