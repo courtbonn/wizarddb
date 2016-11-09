@@ -167,6 +167,8 @@ $stmt->close();
 	</form>
 </div>
 
+
+
 <div>
 	<form method="post" action="addwand.php"> 
 
