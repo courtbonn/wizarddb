@@ -17,6 +17,9 @@ if($mysqli->connect_errno){
 		width:50%;
 		overflow:hidden;
 	}
+	#right{
+		clear:both;
+	}
 	</style>
 </head>
 <body>
@@ -83,8 +86,41 @@ $stmt->close();
 ?>
 	</table>
 </div>
-
+</p>
 <div id="left">
+	<table>
+		<tr>
+			<td>Hogwarts Professors</td>
+		</tr>
+		<tr>
+			<td>First Name</td>
+			<td>Last Name</td>
+			<td>House</td>
+			<td>Wand</td>
+			<td>Head of House</td>
+		</tr>
+		
+<?php
+if(!($stmt = $mysqli->prepare("SELECT p.fname, p.lname, h.hname, p.wand, pf.heads FROM hw_professors pf INNER JOIN hw_people p ON p.id = pf.id INNER JOIN hw_house h ON p.house = h.id"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($fname, $lname, $house, $wand, $head)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+ echo "<tr>\n<td>\n" . $fname . "\n</td>\n<td>\n" . $lname . "\n</td>\n<td>\n" . $house . "\n</td>\n<td>\n" . $wand . "\n</td>\n<td>\n" . $head . "\n</td>\n</tr>";
+}
+$stmt->close();
+?>
+	</table>
+</div>
+
+
+<div id="right">
 	<table>
 		<tr>
 			<td>Wands</td>
@@ -116,83 +152,13 @@ $stmt->close();
 	</table>
 </div>
 
-<div>
-	<form method="post" action="addperson.php"> 
+<a href="insertperson.php">Add a person</a></br>
 
-		<fieldset>
-			<legend>Add a Person</legend>
-			<p>First Name: <input type="text" name="FirstName" /></p>
-			<p>Last Name: <input type="text" name="LastName" /></p>
-			<p><label>Wand:</label></p>
-			<select name="Wand">
-<?php
-if(!($stmt = $mysqli->prepare("SELECT id, length, flexibility, coretype, wandwood FROM hw_wand"))){
-	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
-}
+<a href="insertstudent.php">Make a person a student</a></br>
 
-if(!$stmt->execute()){
-	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
-}
-if(!$stmt->bind_result($id, $length, $flexibility, $coretype, $wandwood)){
-	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
-}
-while($stmt->fetch()){
-	echo '<option value=" '. $id . ' "> ' . $length . "in, " . $flexibility . ", " . $coretype . ", " . $wandwood . '</option>\n';
-}
-$stmt->close();
-?>
-			</select>
-		
-		<p><label>House:</label></p>
-			<select name="House">
-<?php
-if(!($stmt = $mysqli->prepare("SELECT id, hname FROM hw_house"))){
-	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
-}
+<a href="insertwand.php">Add a wand</a></br>
 
-if(!$stmt->execute()){
-	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
-}
-if(!$stmt->bind_result($id, $hname)){
-	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
-}
-while($stmt->fetch()){
-	echo '<option value=" '. $id . ' "> ' . $hname . '</option>\n';
-}
-$stmt->close();
-?>
-			</select>
-		</fieldset>
-		<p><input type="submit" /></p>
-	</form>
-</div>
-
-
-
-<div>
-	<form method="post" action="addwand.php"> 
-
-		<fieldset>
-			<legend>Add a Wand</legend>
-			<p>Length: <input type="text" name="Length" /></p>
-			<p>Flexibility: <input type="text" name="Flexibility" /></p>
-			<p>Core Type: <input type="text" name="CoreType" /></p>
-			<p>Wand Wood: <input type="text" name="WandWood" /></p>
-		</fieldset>
-		<p><input type="submit" /></p>
-	</form>
-</div>
-
-<div>
-	<form method="post" action="deletewand.php"> 
-
-		<fieldset>
-			<legend>Delete a Wand</legend>
-			<p>Wand ID: <input type="text" name="WandID" /></p>
-		</fieldset>
-		<p><input type="submit" /></p>
-	</form>
-</div>
+<a href="delete-wand.php">Delete a wand</a></br>
 
 <div>
 	<form method="post" action="filter.php">
