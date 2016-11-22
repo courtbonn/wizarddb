@@ -67,7 +67,7 @@ if($mysqli->connect_errno){
 					if(!$stmt->execute()){
 						echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
 					}
-					if(!$stmt->bind_result($prid, $fname, $lname)){
+					if(!$stmt->bind_result($fname, $lname, $prid)){
 						echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
 					}
 					while($stmt->fetch()){
@@ -157,6 +157,15 @@ if($mysqli->connect_errno){
 		</form>
 	</div>
 
-
+	<div>
+		<form method="post" action="deletecourse.php"> 
+			<fieldset>
+				<legend>Delete a Course</legend>
+				<p>Course Name: <input type="text" name="CourseName" /></p>
+			</fieldset>
+			<p><input type="submit" /></p>
+		</form>
+	</div>
+	
 </body>
 </html>

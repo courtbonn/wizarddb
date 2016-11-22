@@ -61,5 +61,15 @@ if($mysqli->connect_errno){
 		</form>
 	</div>
 
+	<div>
+		<form method="post" action="deletehouse.php"> 
+			<fieldset>
+				<legend>Delete a House</legend>
+				<p>House Name: <input type="text" name="HouseName" /></p>
+			</fieldset>
+			<p><input type="submit" /></p>
+		</form>
+	</div>
+
 </body>
 </html>
