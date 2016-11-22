@@ -67,7 +67,7 @@ if($mysqli->connect_errno){
 					if(!$stmt->execute()){
 						echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
 					}
-					if(!$stmt->bind_result($fname, $lname, $prid)){
+					if(!$stmt->bind_result($prid, $fname, $lname)){
 						echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
 					}
 					while($stmt->fetch()){
