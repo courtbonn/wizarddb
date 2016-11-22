@@ -56,7 +56,7 @@ if($mysqli->connect_errno){
 	<div>
 		<form method="post" action="addprofessor.php"> 
 			<fieldset>
-				<legend>Add a Student</legend>
+				<legend>Add a Professor</legend>
 				<p>First Name: <input type="text" name="FirstName" /></p>
 				<p>Last Name: <input type="text" name="LastName" /></p>
 				<p><label>Wand:</label></p>
@@ -101,7 +101,16 @@ if($mysqli->connect_errno){
 		</form>
 	</div>
 
-
+	<div>
+		<form method="post" action="deleteprofessor.php"> 
+			<fieldset>
+				<legend>Delete a Professor</legend>
+				<p>First Name: <input type="text" name="FirstName" /></p>
+				<p>Last Name: <input type="text" name="LastName" /></p>
+			</fieldset>
+			<p><input type="submit" /></p>
+		</form>
+	</div>
 
 </body>
 </html>

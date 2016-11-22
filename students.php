@@ -115,7 +115,16 @@ if($mysqli->connect_errno){
 		</form>
 	</div>
 
-
+	<div>
+		<form method="post" action="deletestudent.php"> 
+			<fieldset>
+				<legend>Delete a Student</legend>
+				<p>First Name: <input type="text" name="FirstName" /></p>
+				<p>Last Name: <input type="text" name="LastName" /></p>
+			</fieldset>
+			<p><input type="submit" /></p>
+		</form>
+	</div>
 
 
 
