@@ -17,18 +17,17 @@ if(!($stmt->bind_param("ssii",$_POST['FirstName'],$_POST['LastName'],$_POST['Hou
 if(!$stmt->execute()){
 	echo "Execute failed: "  . $stmt->errno . " " . $stmt->error;
 } 
-
-// Insert new student into hw_students that has the id of the person added to hw_people above
-if(!($stmt = $mysqli->prepare("INSERT INTO hw_students(id, bloodStatus, yearOfSorting) VALUES ((SELECT p.id FROM hw_people p WHERE (p.fname = ? AND p.lname = ?)),?,?)"))){
+// Insert new professor into hw_professors that has the id of the person added to hw_people above
+if(!($stmt = $mysqli->prepare("INSERT INTO hw_professors(id) VALUES ((SELECT p.id FROM hw_people p WHERE (p.fname = ? AND p.lname = ?)))"))){
 	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
 }
-if(!($stmt->bind_param("ssss",$_POST['FirstName'],$_POST['LastName'], $_POST['Blood'],$_POST['YearSorting']))){
+if(!($stmt->bind_param("ss",$_POST['FirstName'],$_POST['LastName']))){
 	echo "Bind failed: "  . $stmt->errno . " " . $stmt->error;
 }
 if(!$stmt->execute()){
 	echo "Execute failed: "  . $stmt->errno . " " . $stmt->error;
 } 
 else {
-	echo "Added " . $stmt->affected_rows . " rows to hw_students.";
+	echo "Added " . $stmt->affected_rows . " rows to hw_professors.";
 }
 ?>
