@@ -126,6 +126,33 @@ if($mysqli->connect_errno){
 		</form>
 	</div>
 
+	<div>
+		<form method="post" action="updatestudent.php"> 
+			<fieldset>
+				<legend>Update a Student</legend>
+				<label>Select Student:</label>
+				<select name="StudentID">
+					<?php
+					if(!($stmt = $mysqli->prepare("SELECT p.fname, p.lname, s.id FROM hw_students s INNER JOIN hw_people p WHERE s.id = p.id"))){
+						echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+					}
+					if(!$stmt->execute()){
+						echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+					}
+					if(!$stmt->bind_result($fname, $lname, $sid)){
+						echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+					}
+					while($stmt->fetch()){
+						echo '<option value="' . $sid . '">' . $fname . " " . $lname . '</option>';
+					}
+					$stmt->close();
+					?>
+				</select>
+				<p>Update Year of Sorting: <input type="text" name="YearSorting" /></p>
+			</fieldset>
+			<p><input type="submit" /></p>
+		</form>
+	</div>
 
 
 </body>

@@ -74,5 +74,35 @@ if($mysqli->connect_errno){
 		</form>
 	</div>
 
+	<div>
+		<form method="post" action="updatewand.php"> 
+			<fieldset>
+				<legend>Update a Wand</legend>
+				<p><label>Wand:</label></p>
+				<select name="WandID">
+					<?php
+					if(!($stmt = $mysqli->prepare("SELECT id, length, flexibility, coretype, wandwood FROM hw_wand"))){
+						echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+					}
+					if(!$stmt->execute()){
+						echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+					}
+					if(!$stmt->bind_result($id, $length, $flexibility, $coretype, $wood)){
+						echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+					}
+					while($stmt->fetch()){
+						echo '<option value=" '. $id . ' "> ' . $length . "in, " . $flexibility . ", " . $coretype . ", " . $wandwood . '</option>\n';
+					}
+					$stmt->close();
+					?>
+				</select>
+				<p>Update Length: <input type="text" name="Length"/></p>
+				<p>Update Flexibility: <input type="text" name="Flexibility"/></p>
+				<p>Update Core Type: <input type="text" name="CoreType" /></p>
+				<p>Update Wand Wood: <input type="text" name="WandWood" /></p>
+			</fieldset>
+			<p><input type="submit" /></p>
+		</form>
+	</div>
 </body>
 </html>
