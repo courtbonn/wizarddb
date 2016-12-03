@@ -3,23 +3,24 @@
 ini_set('display_errors', 'On');
 //Connects to the database
 //$mysqli = new mysqli("oniddb.cws.oregonstate.edu","cavenese-db","JnOBc71XAq0vwNhP","cavenese-db");
-$mysqli = new mysqli("oniddb.cws.oregonstate.edu","bonnc-db","q60oUq13cpkrUQE7","bonnc-db");
+ $mysqli = new mysqli("oniddb.cws.oregonstate.edu","bonnc-db","q60oUq13cpkrUQE7","bonnc-db");
 
 if(!$mysqli || $mysqli->connect_errno){
 	echo "Connection error " . $mysqli->connect_errno . " " . $mysqli->connect_error;
 	}
 
-	
-if(!($stmt = $mysqli->prepare("DELETE FROM hw_wand WHERE id = ?"))){
+// Insert new person into hw_people	
+if(!($stmt = $mysqli->prepare("INSERT INTO hw_takes (studentID, courseID) VALUES (?, ?)"))){
 	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
 }
-if(!($stmt->bind_param('i', $_POST['Delete_Wand']))){
+if(!($stmt->bind_param("si",$_POST['StudentID'],$_POST['CourseID']))){
 	echo "Bind failed: "  . $stmt->errno . " " . $stmt->error;
 }
 if(!$stmt->execute()){
 	echo "Execute failed: "  . $stmt->errno . " " . $stmt->error;
-} else {
-	echo "Deleted " . $stmt->affected_rows . " rows from hw_wand.";
+} 
+else {
+	echo "Added " . $stmt->affected_rows . " rows to hw_takes.";
 }
 
 
@@ -36,10 +37,10 @@ if(!$stmt->execute()){
 		overflow:hidden;
 	}
 	</style>
-	<title>Hogwarts Database: Wand Deleted</title>
+	<title>Hogwarts Database: Student Added to Course</title>
 </head>
 <body>
-	<p>Return to <a href="hw_wands.php">Wands</a> page.<br>
+	<p>Return to <a href="hw_courses.php">Courses</a> page.<br>
 	<p>Return to <a href="hw_home.html">Main</a> page.</p>
 </body>
 <html>

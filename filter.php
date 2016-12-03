@@ -10,7 +10,21 @@ if($mysqli->connect_errno){
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
+<head>
+	<style>
+	#left{
+		float:left;
+		width:100%;
+		overflow:hidden;
+	}
+	</style>
+	<title>Hogwarts Database: Filter by House</title>
+</head>
+
 <body>
+
+	<h1>People by House</h1>
+	
 <div>
 	<table>
 		<tr>

@@ -2,29 +2,37 @@
 //Turn on error reporting
 ini_set('display_errors', 'On');
 //Connects to the database
+//$mysqli = new mysqli("oniddb.cws.oregonstate.edu","cavenese-db","JnOBc71XAq0vwNhP","cavenese-db");
 $mysqli = new mysqli("oniddb.cws.oregonstate.edu","bonnc-db","q60oUq13cpkrUQE7","bonnc-db");
 if($mysqli->connect_errno){
 	echo "Connection error " . $mysqli->connect_errno . " " . $mysqli->connect_error;
 	}
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
+	<style>
+	#left{
+		float:left;
+		width:50%;
+		overflow:hidden;
+	}
+	</style>
 	<title>Hogwarts Database: Welcome!</title>
 </head>
 <body>
-
-<h1>Hogwarts Database</h1>
+	<h1>Hogwarts Database</h1>
 
 	<p>Welcome to the Hogwarts database! Click the links below to access, add, and update information about Hogwarts.</p>
 
 	<ul>
-		<li><a href="professors.php">Professors</a></li>
-		<li><a href="students.php">Students</a></li>
-		<li><a href="houses.php">Houses</a></li>
-		<li><a href="wands.php">Wands</a></li>
-		<li><a href="courses.php">Courses</a></li>
+		<li><a href="hw_students.php">Students</a></li>
+		<li><a href="hw_professors.php">Professors</a></li>
+		<li><a href="hw_houses.php">Houses</a></li>
+		<li><a href="hw_courses.php">Courses</a></li>
+		<li><a href="hw_wands.php">Wands</a></li>
 	</ul>
 
 </p>
@@ -55,6 +63,7 @@ if($mysqli->connect_errno){
 		<input type="submit" value="Run Filter" />
 	</form>
 </div>
+
 
 </body>
 </html>
